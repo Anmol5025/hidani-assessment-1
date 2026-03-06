@@ -70,15 +70,15 @@
                     method: 'POST',
                     body: formData
                 });
-                const data = await response.json();
                 
-                if (response.ok) {
-                    showResults(`<div class="resume-info"><h3>Success!</h3><p>${data.message}</p></div>`);
-                } else {
-                    showError(data.error);
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
                 }
+                
+                const data = await response.json();
+                showResults(`<div class="resume-info"><h3>Success!</h3><p>${data.message}</p></div>`);
             } catch (error) {
-                showError(error.message);
+                showError(`Failed to upload JD: ${error.message}`);
             }
         }
 
@@ -96,15 +96,15 @@
                     method: 'POST',
                     body: formData
                 });
-                const data = await response.json();
                 
-                if (response.ok) {
-                    displayResults(data);
-                } else {
-                    showError(data.error);
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
                 }
+                
+                const data = await response.json();
+                displayResults(data);
             } catch (error) {
-                showError(error.message);
+                showError(`Failed to parse resume: ${error.message}`);
             }
         }
 
@@ -113,7 +113,17 @@
             
             try {
                 const response = await fetch('/api/jobs');
+                
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+                
                 const jobs = await response.json();
+                
+                if (jobs.length === 0) {
+                    showResults('<div class="resume-info"><h3>No Jobs Found</h3><p>Please upload a JD file first.</p></div>');
+                    return;
+                }
                 
                 let html = '<h2>Available Jobs</h2>';
                 jobs.forEach(job => {
@@ -130,7 +140,7 @@
                 
                 showResults(html);
             } catch (error) {
-                showError(error.message);
+                showError(`Failed to load jobs: ${error.message}. Make sure the server is running on http://localhost:3000`);
             }
         }
 
