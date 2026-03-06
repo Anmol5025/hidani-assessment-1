@@ -1,0 +1,208 @@
+{
+  "name": "John Doe",
+  "salary": "15 LPA",
+  "yearOfExperience": 5,
+  "resumeSkills": [
+    "Java",
+    "Python",
+    "JavaScript",
+    "TypeScript",
+    "Spring Boot",
+    "React",
+    "Node.js",
+    "Express",
+    "MySQL",
+    "MongoDB",
+    "PostgreSQL",
+    "Docker",
+    "Kubernetes",
+    "Jenkins",
+    "AWS",
+    "Kafka",
+    "REST",
+    "API",
+    "Microservices",
+    "Git"
+  ],
+  "matchingJobs": [
+    {
+      "jobId": "JD001",
+      "role": "Backend Developer",
+      "aboutRole": "Responsible for developing and maintaining backend services using Java and Spring Boot. Work with microservices architecture and cloud technologies.",
+      "requiredSkills": [
+        "Java",
+        "Spring Boot",
+        "MySQL",
+        "Kafka",
+        "Docker"
+      ],
+      "optionalSkills": [
+        "Kubernetes",
+        "AWS"
+      ],
+      "salary": "15 LPA",
+      "experience": 5,
+      "skillsAnalysis": [
+        {
+          "skill": "Java",
+          "presentInResume": true
+        },
+        {
+          "skill": "Spring Boot",
+          "presentInResume": true
+        },
+        {
+          "skill": "MySQL",
+          "presentInResume": true
+        },
+        {
+          "skill": "Kafka",
+          "presentInResume": true
+        },
+        {
+          "skill": "Docker",
+          "presentInResume": true
+        }
+      ],
+      "matchingScore": 100
+    },
+    {
+      "jobId": "JD002",
+      "role": "Full Stack Developer",
+      "aboutRole": "Build modern web applications using React, Node.js, and cloud technologies. Collaborate with cross-functional teams.",
+      "requiredSkills": [
+        "JavaScript",
+        "React",
+        "Node.js",
+        "MongoDB",
+        "REST",
+        "Git"
+      ],
+      "optionalSkills": [
+        "TypeScript",
+        "Docker"
+      ],
+      "salary": "12 LPA",
+      "experience": 3,
+      "skillsAnalysis": [
+        {
+          "skill": "JavaScript",
+          "presentInResume": true
+        },
+        {
+          "skill": "React",
+          "presentInResume": true
+        },
+        {
+          "skill": "Node.js",
+          "presentInResume": true
+        },
+        {
+          "skill": "MongoDB",
+          "presentInResume": true
+        },
+        {
+          "skill": "REST",
+          "presentInResume": true
+        },
+        {
+          "skill": "Git",
+          "presentInResume": true
+        }
+      ],
+      "matchingScore": 100
+    },
+    {
+      "jobId": "JD003",
+      "role": "DevOps Engineer",
+      "aboutRole": "Manage CI/CD pipelines, containerization, and cloud infrastructure. Ensure system reliability and scalability.",
+      "requiredSkills": [
+        "Docker",
+        "Kubernetes",
+        "Jenkins",
+        "AWS",
+        "Linux",
+        "Python"
+      ],
+      "optionalSkills": [
+        "Terraform",
+        "Ansible"
+      ],
+      "salary": "18 LPA",
+      "experience": 4,
+      "skillsAnalysis": [
+        {
+          "skill": "Docker",
+          "presentInResume": true
+        },
+        {
+          "skill": "Kubernetes",
+          "presentInResume": true
+        },
+        {
+          "skill": "Jenkins",
+          "presentInResume": true
+        },
+        {
+          "skill": "AWS",
+          "presentInResume": true
+        },
+        {
+          "skill": "Linux",
+          "presentInResume": false
+        },
+        {
+          "skill": "Python",
+          "presentInResume": true
+        }
+      ],
+      "matchingScore": 83
+    },
+    {
+      "jobId": "JD004",
+      "role": "Data Engineer",
+      "aboutRole": "Design and build data pipelines, work with big data technologies and databases.",
+      "requiredSkills": [
+        "Python",
+        "SQL",
+        "Kafka",
+        "Spark",
+        "Hadoop",
+        "ETL"
+      ],
+      "optionalSkills": [
+        "Airflow",
+        "AWS"
+      ],
+      "salary": "20 LPA",
+      "experience": 5,
+      "skillsAnalysis": [
+        {
+          "skill": "Python",
+          "presentInResume": true
+        },
+        {
+          "skill": "SQL",
+          "presentInResume": false
+        },
+        {
+          "skill": "Kafka",
+          "presentInResume": true
+        },
+        {
+          "skill": "Spark",
+          "presentInResume": false
+        },
+        {
+          "skill": "Hadoop",
+          "presentInResume": false
+        },
+        {
+          "skill": "ETL",
+          "presentInResume": false
+        }
+      ],
+      "matchingScore": 33
+    }
+  ]
+}

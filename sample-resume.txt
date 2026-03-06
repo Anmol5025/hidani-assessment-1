@@ -1,0 +1,50 @@
+Jane Smith
+Full Stack Software Engineer
+jane.smith@email.com | (555) 123-4567
+
+PROFESSIONAL SUMMARY
+Results-driven software engineer with 7 years of experience in designing and developing scalable applications.
+Expected CTC: ₹18,00,000 per annum
+
+TECHNICAL SKILLS
+Programming Languages: Java, Python, C++, JavaScript, TypeScript, Go
+Web Technologies: React, Angular, Node.js, Express, Spring Boot, Django
+Databases: MySQL, PostgreSQL, MongoDB, Redis, Cassandra
+Cloud & DevOps: AWS, Azure, Docker, Kubernetes, Jenkins, CI/CD, Terraform
+Message Queues: Kafka, RabbitMQ
+API Development: REST, GraphQL, gRPC, Microservices
+Testing: JUnit, Jest, Pytest, Selenium
+Version Control: Git, GitHub, GitLab
+Methodologies: Agile, Scrum, TDD
+
+PROFESSIONAL EXPERIENCE
+
+Senior Software Engineer | TechCorp Inc. | 2021 - Present
+• Architected and developed microservices-based applications using Spring Boot and Kafka
+• Implemented containerization with Docker and orchestration with Kubernetes
+• Built RESTful APIs and GraphQL services for mobile and web applications
+• Optimized database queries reducing response time by 40%
+• Mentored junior developers and conducted code reviews
+
+Software Engineer | Innovation Labs | 2019 - 2021
+• Developed full-stack applications using React, Node.js, and MongoDB
+• Integrated third-party APIs and payment gateways
+• Implemented CI/CD pipelines using Jenkins and GitLab
+• Worked with AWS services including EC2, S3, Lambda, and RDS
+
+Junior Developer | StartupXYZ | 2017 - 2019
+• Built responsive web applications using Angular and TypeScript
+• Developed backend services with Python Django and PostgreSQL
+• Participated in Agile development processes and daily standups
+
+EDUCATION
+Bachelor of Technology in Computer Science
+University of Technology | 2013 - 2017
+
+CERTIFICATIONS
+• AWS Certified Solutions Architect
+• Oracle Certified Java Programmer
+
+PROJECTS
+E-Commerce Platform: Built a scalable e-commerce platform handling 10K+ concurrent users
+Real-time Analytics Dashboard: Developed real-time data visualization using React and Kafka

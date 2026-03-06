@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Job Matcher</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { color: #333; margin-bottom: 30px; text-align: center; }
+        .upload-section { background: white; padding: 30px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .upload-box { border: 2px dashed #ddd; padding: 40px; text-align: center; border-radius: 8px; margin-bottom: 20px; }
+        .upload-box:hover { border-color: #4CAF50; background: #f9f9f9; }
+        input[type="file"] { display: none; }
+        .btn { background: #4CAF50; color: white; padding: 12px 30px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        .btn:hover { background: #45a049; }
+        .btn-secondary { background: #2196F3; }
+        .btn-secondary:hover { background: #0b7dda; }
+        .results { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .resume-info { background: #e8f5e9; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .job-card { border: 1px solid #ddd; padding: 20px; margin-bottom: 15px; border-radius: 8px; }
+        .job-card h3 { color: #333; margin-bottom: 10px; }
+        .score { font-size: 24px; font-weight: bold; color: #4CAF50; float: right; }
+        .skill-tag { display: inline-block; padding: 5px 12px; margin: 4px; border-radius: 4px; font-size: 14px; }
+        .skill-present { background: #c8e6c9; color: #2e7d32; }
+        .skill-missing { background: #ffcdd2; color: #c62828; }
+        .loading { text-align: center; padding: 20px; color: #666; }
+        .error { background: #ffebee; color: #c62828; padding: 15px; border-radius: 4px; margin-bottom: 20px; }
+        .info-row { margin: 10px 0; }
+        .label { font-weight: bold; color: #555; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Resume & Job Matching System</h1>
+        
+        <div class="upload-section">
+            <h2>Upload Job Descriptions</h2>
+            <div class="upload-box" onclick="document.getElementById('jdFile').click()">
+                <p>Click to upload JD file (TXT)</p>
+                <input type="file" id="jdFile" accept=".txt" onchange="uploadJD()">
+            </div>
+            <button class="btn btn-secondary" onclick="loadJobs()">View All Jobs</button>
+        </div>
+
+        <div class="upload-section">
+            <h2>Upload Resume</h2>
+            <div class="upload-box" onclick="document.getElementById('resumeFile').click()">
+                <p>Click to upload Resume (PDF or TXT)</p>
+                <input type="file" id="resumeFile" accept=".pdf,.txt" onchange="uploadResume()">
+            </div>
+        </div>
+
+        <div id="results" class="results" style="display:none;"></div>
+    </div>
+
+    <script>
+        async function uploadJD() {
+            const file = document.getElementById('jdFile').files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('jd', file);
+
+            showLoading('Parsing job descriptions...');
+
+            try {
+                const response = await fetch('/api/upload-jd', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResults(`<div class="resume-info"><h3>Success!</h3><p>${data.message}</p></div>`);
+                } else {
+                    showError(data.error);
+                }
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+
+        async function uploadResume() {
+            const file = document.getElementById('resumeFile').files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('resume', file);
+
+            showLoading('Parsing resume and matching jobs...');
+
+            try {
+                const response = await fetch('/api/parse-resume', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                
+                if (response.ok) {
+                    displayResults(data);
+                } else {
+                    showError(data.error);
+                }
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+
+        async function loadJobs() {
+            showLoading('Loading jobs...');
+            
+            try {
+                const response = await fetch('/api/jobs');
+                const jobs = await response.json();
+                
+                let html = '<h2>Available Jobs</h2>';
+                jobs.forEach(job => {
+                    html += `
+                        <div class="job-card">
+                            <h3>${job.role}</h3>
+                            <div class="info-row"><span class="label">Job ID:</span> ${job.jobId}</div>
+                            <div class="info-row"><span class="label">Experience:</span> ${job.experience || 'Not specified'} years</div>
+                            <div class="info-row"><span class="label">Salary:</span> ${job.salary || 'Not specified'}</div>
+                            <div class="info-row"><span class="label">Skills:</span> ${job.skills.join(', ')}</div>
+                        </div>
+                    `;
+                });
+                
+                showResults(html);
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+
+        function displayResults(data) {
+            let html = `
+                <div class="resume-info">
+                    <h2>Resume Analysis</h2>
+                    <div class="info-row"><span class="label">Name:</span> ${data.name}</div>
+                    <div class="info-row"><span class="label">Experience:</span> ${data.yearOfExperience} years</div>
+                    <div class="info-row"><span class="label">Salary:</span> ${data.salary || 'Not specified'}</div>
+                    <div class="info-row"><span class="label">Skills:</span> ${data.resumeSkills.join(', ')}</div>
+                </div>
+                <h2>Matching Jobs (${data.matchingJobs.length})</h2>
+            `;
+
+            data.matchingJobs.forEach(job => {
+                html += `
+                    <div class="job-card">
+                        <span class="score">${job.matchingScore}%</span>
+                        <h3>${job.role}</h3>
+                        <div class="info-row"><span class="label">Job ID:</span> ${job.jobId}</div>
+                        <div class="info-row"><span class="label">Experience:</span> ${job.experience || 'Not specified'} years</div>
+                        <div class="info-row"><span class="label">Salary:</span> ${job.salary || 'Not specified'}</div>
+                        <div class="info-row"><span class="label">About:</span> ${job.aboutRole}</div>
+                        <div class="info-row">
+                            <span class="label">Skills Analysis:</span><br>
+                            ${job.skillsAnalysis.map(s => 
+                                `<span class="skill-tag ${s.presentInResume ? 'skill-present' : 'skill-missing'}">
+                                    ${s.skill} ${s.presentInResume ? '✓' : '✗'}
+                                </span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            showResults(html);
+        }
+
+        function showLoading(message) {
+            const results = document.getElementById('results');
+            results.style.display = 'block';
+            results.innerHTML = `<div class="loading">${message}</div>`;
+        }
+
+        function showResults(html) {
+            const results = document.getElementById('results');
+            results.style.display = 'block';
+            results.innerHTML = html;
+        }
+
+        function showError(message) {
+            const results = document.getElementById('results');
+            results.style.display = 'block';
+            results.innerHTML = `<div class="error">Error: ${message}</div>`;
+        }
+    </script>
+</body>
+</html>
