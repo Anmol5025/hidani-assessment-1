@@ -329,29 +329,4 @@ rm -rf node_modules package-lock.json
 npm install
 ```
 
-
----
-
-## Submission Checklist
-
-✅ **README with setup instructions** - Complete setup guide included above  
-✅ **Sample output JSON** - See `sample-output.json` file  
-✅ **Technical requirements met:**
-  - Node.js implementation
-  - Allowed libraries: regex, pdf-parse
-  - Clean modular code
-
-✅ **Evaluation criteria compliance:**
-  - Extraction accuracy (40%)
-  - Matching logic (25%)
-  - Code quality (20%)
-  - Performance (10%)
-  - Documentation (5%)
-
-✅ **Working application** - Test with `node test-example.js`  
-✅ **API endpoints** - Full REST API implemented  
-✅ **Web UI** - Browser interface at http://localhost:3000
-
-## License
-
 MIT
