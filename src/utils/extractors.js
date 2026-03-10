@@ -143,19 +143,56 @@ class Extractors {
   static extractName(text) {
     const lines = text.split('\n').filter(line => line.trim());
     
-    // First non-empty line is often the name
-    if (lines.length > 0) {
-      const firstLine = lines[0].trim();
-      if (firstLine.length < 50 && !firstLine.includes('@') && !firstLine.includes('http')) {
-        return firstLine;
+    // Keywords to exclude from name detection
+    const excludeKeywords = [
+      'resume', 'cv', 'curriculum', 'vitae', 'profile', 'linkedin', 'github', 
+      'email', 'phone', 'address', 'find me', 'contact', 'portfolio', 'website',
+      'leetcode', 'hackerrank', 'codechef', 'codeforces', 'gfg', 'geeksforgeeks',
+      'http', '@', '.com', '.in', '.org', 'www', '|', 'objective', 'summary'
+    ];
+    
+    // Try to find name in first few lines
+    for (let i = 0; i < Math.min(5, lines.length); i++) {
+      const line = lines[i].trim();
+      
+      // Skip if line is too long or too short
+      if (line.length < 3 || line.length > 50) continue;
+      
+      // Skip if contains excluded keywords
+      const lowerLine = line.toLowerCase();
+      if (excludeKeywords.some(keyword => lowerLine.includes(keyword))) continue;
+      
+      // Skip if contains special characters (except spaces, dots, hyphens)
+      if (/[^a-zA-Z\s.\-']/.test(line)) continue;
+      
+      // Skip if contains numbers
+      if (/\d/.test(line)) continue;
+      
+      // Check if it looks like a name (2-4 words, each starting with capital)
+      const words = line.split(/\s+/);
+      if (words.length >= 2 && words.length <= 4) {
+        const allCapitalized = words.every(word => /^[A-Z][a-z]*\.?$/.test(word));
+        if (allCapitalized) {
+          return line;
+        }
       }
     }
-
-    // Look for name patterns
-    const namePattern = /^([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)/m;
+    
+    // Fallback: Look for name patterns anywhere in text
+    const namePattern = /\b([A-Z][a-z]+(?:\s+[A-Z][a-z]+){1,3})\b/;
     const match = text.match(namePattern);
     
-    return match ? match[1] : 'Unknown';
+    if (match) {
+      const potentialName = match[1];
+      const lowerName = potentialName.toLowerCase();
+      
+      // Verify it doesn't contain excluded keywords
+      if (!excludeKeywords.some(keyword => lowerName.includes(keyword))) {
+        return potentialName;
+      }
+    }
+    
+    return 'Unknown';
   }
 
   // Extract job role/title
